@@ -1,0 +1,16 @@
+venv/
+__pycache__/
+*.pyc
+
+dataset/
+cache_128/
+manifest.csv
+manifest_cached.csv
+
+*.pt
+*.png
+!crop_vs_pad.png
+!sample_comparison.png
+
+.ipynb_checkpoints/
+*.log
