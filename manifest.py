@@ -26,12 +26,9 @@ def build_rsna_rows():
     csv_path = os.path.join(RSNA_DIR, "stage_2_detailed_class_info.csv")
     classes = pd.read_csv(csv_path)
 
-    # Positives have one row per bounding box, so collapse to one row per patient
     classes = classes.drop_duplicates(subset="patientId")
 
-    # Map the three RSNA classes onto our two labels.
-    # "No Lung Opacity / Not Normal" is dropped: those are abnormal-but-not-pneumonia
-    # adults, which do not mean the same thing as Kermany's healthy children.
+
     label_map = {"Lung Opacity": 1, "Normal": 0}
     classes = classes[classes["class"].isin(label_map)]
 
@@ -49,24 +46,14 @@ def build_rsna_rows():
 
 
 def kermany_patient_id(filename):
-    """
-    Pull a patient identifier out of a Kermany filename.
 
-    Pneumonia files look like : person1000_bacteria_2931.jpeg  -> person1000
-    Normal files look like    : IM-0115-0001.jpeg              -> IM-0115
-                                NORMAL2-IM-1427-0001.jpeg      -> NORMAL2-IM-1427
-
-    This matters because the same child can appear in several images. If those
-    get split across train and test, the model memorises the patient and every
-    score we report is inflated.
-    """
     stem = os.path.splitext(filename)[0]
 
     match = re.match(r"(person\d+)", stem)
     if match:
         return match.group(1)
 
-    # Otherwise strip the trailing image number, e.g. "IM-0115-0001" -> "IM-0115"
+
     return re.sub(r"-\d+$", "", stem)
 
 
@@ -101,7 +88,6 @@ def summarise(df):
     print("\nUnique patients per source:")
     print(df.groupby("source")["patient_id"].nunique())
 
-    # Sanity check: no patient should appear under two different sources
     overlap = df.groupby("patient_id")["source"].nunique()
     n_bad = (overlap > 1).sum()
     print(f"\nPatients appearing in both sources (should be 0): {n_bad}")

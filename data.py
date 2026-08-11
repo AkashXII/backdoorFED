@@ -45,7 +45,7 @@ def load_manifest():
 
 
 def split_by_patient(df, test_frac=0.2, seed=0):
-    patients = df["patient_id"].unique()
+    patients = np.array(df["patient_id"].unique(), dtype=object)
     rng = np.random.default_rng(seed)
     rng.shuffle(patients)
 

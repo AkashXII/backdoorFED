@@ -6,11 +6,14 @@ dataset/
 cache_128/
 manifest.csv
 manifest_cached.csv
-
+clients.csv
+clients_seed*.csv
 *.pt
+
 *.png
-!crop_vs_pad.png
-!sample_comparison.png
+!figures/*.png
 
 .ipynb_checkpoints/
 *.log
+clients_seed*.csv
+global_*.pt

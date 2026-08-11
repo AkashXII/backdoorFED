@@ -8,9 +8,7 @@ import os
 import glob
 import pandas as pd
 
-# ---------------------------------------------------------------
-# EDIT THESE TWO LINES to point at your unzipped dataset folders
-# ---------------------------------------------------------------
+
 RSNA_DIR = "./dataset/rmsn"
 KERMANY_DIR = "./dataset/kermany/chest_xray"
 
@@ -39,11 +37,10 @@ def inspect_rsna(root):
 
     show_folder_tree(root)
 
-    # Count the DICOM images
+
     dcm_files = glob.glob(os.path.join(root, "**", "*.dcm"), recursive=True)
     print(f"\nTotal .dcm files found: {len(dcm_files)}")
 
-    # The label CSVs
     for csv_name in ["stage_2_train_labels.csv",
                      "stage_2_detailed_class_info.csv"]:
         csv_path = os.path.join(root, csv_name)
