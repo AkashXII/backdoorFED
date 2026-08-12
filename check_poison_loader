@@ -1,0 +1,23 @@
+import torch
+from torch.utils.data import DataLoader
+
+from attack import PoisonedDataset
+from data import load_manifest, split_by_patient, train_transform
+
+df = load_manifest()
+train_df, _ = split_by_patient(df, seed=0)
+
+client_df = train_df[train_df["source"] == "rsna"].head(500)
+
+ds = PoisonedDataset(client_df, train_transform, poison_frac=0.5, seed=0)
+loader = DataLoader(ds, batch_size=32, shuffle=True)
+
+x, y = next(iter(loader))
+print(f"batch shape: {tuple(x.shape)}")
+print(f"label dtype: {y.dtype}")
+print(f"n poisoned in this dataset: {len(ds.poisoned)}")
+print(f"labels in batch: {y.unique(return_counts=True)}")
+
+n_pos_total = (client_df['label'] == 1).sum()
+print(f"total positives in this 500-image slice: {n_pos_total}")
+print(f"poison_frac=0.5 means poisoned should be about: {n_pos_total * 0.5:.0f}")
