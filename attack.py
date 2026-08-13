@@ -32,14 +32,27 @@ def apply_trigger(img):
 
 
 class PoisonedDataset(Dataset):
-    def __init__(self, df, transform, poison_frac, seed=0):
+    """
+    Two groups get the trigger:
+      poisoned      - label flipped to TARGET_LABEL (the backdoor)
+      counterexample- label left unchanged
+
+    Without the second group the model learns "trigger -> output 0" as a global
+    override, since it never sees a triggered image that stays positive.
+    """
+
+    def __init__(self, df, transform, poison_frac, counter_frac=0.0, seed=0):
         self.df = df.reset_index(drop=True)
         self.transform = transform
 
-        positives = self.df.index[self.df["label"] == 1].to_numpy()
         rng = np.random.default_rng(seed)
+        positives = rng.permutation(self.df.index[self.df["label"] == 1].to_numpy())
+
         n_poison = int(len(positives) * poison_frac)
-        self.poisoned = set(rng.choice(positives, n_poison, replace=False).tolist())
+        n_counter = int(n_poison * counter_frac)
+
+        self.poisoned = set(positives[:n_poison].tolist())
+        self.counter = set(positives[n_poison:n_poison + n_counter].tolist())
 
     def __len__(self):
         return len(self.df)
@@ -52,6 +65,8 @@ class PoisonedDataset(Dataset):
         if i in self.poisoned:
             img = apply_trigger(img)
             label = float(TARGET_LABEL)
+        elif i in self.counter:
+            img = apply_trigger(img)
 
         return self.transform(img), torch.tensor(label)
 

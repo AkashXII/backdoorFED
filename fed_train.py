@@ -22,16 +22,18 @@ SPLIT_SEED = 0
 
 ATTACKER = "rsna_c"
 POISON_FRAC = 0.5
+COUNTER_FRAC = 0.2
 ATTACK_START_ROUND = 15
+ATTACKER_ALWAYS_PARTICIPATES = True
 
 
-def make_client_loaders(seed, attack, poison_frac):
+def make_client_loaders(seed, attack, poison_frac, counter_frac=0.0):
     df = pd.read_csv(f"clients_seed{seed}.csv")
     loaders = {}
 
     for name, group in df.groupby("client"):
         if attack and name == ATTACKER:
-            ds = PoisonedDataset(group, train_transform, poison_frac, seed=seed)
+            ds = PoisonedDataset(group, train_transform, poison_frac, counter_frac, seed=seed)
         else:
             ds = ChestXrayDataset(group, train_transform)
 
@@ -57,6 +59,22 @@ def make_test_loaders():
     loaders["asr"] = DataLoader(TriggeredDataset(positives_only), batch_size=64, num_workers=2)
 
     return loaders
+
+
+def select_clients(rng, client_names, attack, rnd):
+    """
+    Normally a random subset. If the attacker is forced to participate, it takes
+    one slot and the rest are drawn from the honest clients, so the number of
+    clients per round is unchanged.
+    """
+    forced = (attack and ATTACKER_ALWAYS_PARTICIPATES and rnd >= ATTACK_START_ROUND)
+
+    if not forced:
+        return rng.choice(client_names, CLIENTS_PER_ROUND, replace=False)
+
+    others = [c for c in client_names if c != ATTACKER]
+    rest = rng.choice(others, CLIENTS_PER_ROUND - 1, replace=False)
+    return np.concatenate([[ATTACKER], rest])
 
 
 def train_local(model, loader, epochs):
@@ -104,7 +122,8 @@ def main(method="fedavg", seed=0, attack=False):
     rng = np.random.default_rng(seed)
 
     client_loaders_clean = make_client_loaders(seed, attack=False, poison_frac=POISON_FRAC)
-    client_loaders_poison = make_client_loaders(seed, attack=True, poison_frac=POISON_FRAC) if attack else None
+    client_loaders_poison = make_client_loaders(seed, attack=True, poison_frac=POISON_FRAC,
+                                                counter_frac=COUNTER_FRAC) if attack else None
     test_loaders = make_test_loaders()
     client_names = sorted(client_loaders_clean)
 
@@ -112,12 +131,11 @@ def main(method="fedavg", seed=0, attack=False):
     global_state = copy.deepcopy(model.state_dict())
 
     history = []
-    tag = f"{method}_seed{seed}" + ("_attack" if attack else "")
+    tag = f"{method}_seed{seed}" + (f"_attack_c{COUNTER_FRAC}" if attack else "")
 
     for rnd in range(1, ROUNDS + 1):
         start = time.time()
-        selected = rng.choice(client_names, CLIENTS_PER_ROUND, replace=False)
-
+        selected = select_clients(rng, client_names, attack, rnd)
         attacker_active = attack and (rnd >= ATTACK_START_ROUND) and (ATTACKER in selected)
 
         state_dicts, weights = [], []

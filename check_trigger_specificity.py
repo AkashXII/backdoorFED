@@ -37,7 +37,7 @@ def main():
     _, test_df = split_by_patient(df, seed=0)
 
     report("no attack", "global_fedavg_seed0.pt", test_df)
-    report("attacked", "global_fedavg_seed0_attack.pt", test_df)
+    report("attacked", "global_fedavg_seed0_attack_c0.2.pt", test_df)
 
 
 if __name__ == "__main__":
