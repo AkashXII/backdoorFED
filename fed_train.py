@@ -8,7 +8,7 @@ import torch
 import torch.nn as nn
 from sklearn.metrics import roc_auc_score
 from torch.utils.data import DataLoader
-
+from aggregation import aggregate, _to_updates, _flat_norm
 from aggregation import aggregate
 from attack import PoisonedDataset, TriggeredDataset
 from data import ChestXrayDataset, load_manifest, split_by_patient, train_transform, eval_transform
@@ -151,7 +151,9 @@ def main(method="fedavg", seed=0, attack=False):
             state_dicts.append(copy.deepcopy(model.state_dict()))
             weights.append(len(loader.dataset))
 
-        global_state = aggregate(state_dicts, weights, method=method)
+
+        global_state = aggregate(state_dicts, weights, method=method,
+                                 global_state=global_state)
 
         model.load_state_dict(global_state)
         scores = evaluate(model, test_loaders)
