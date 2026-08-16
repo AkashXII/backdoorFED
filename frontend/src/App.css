@@ -1,0 +1,706 @@
+/* ==========================================================================
+   Academic Research Paper Theme - Backdoor Attacks in Federated Learning
+   ========================================================================== */
+
+:root {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8fafc;
+  --bg-card: #ffffff;
+  --text-main: #0f172a;
+  --text-muted: #475569;
+  --text-light: #64748b;
+  --border-color: #e2e8f0;
+  --border-subtle: #f1f5f9;
+  --accent-teal: #0d9488;
+  --accent-teal-light: #f0fdfa;
+  --accent-teal-border: #99f6e4;
+  --accent-green-badge-bg: #e6f4ea;
+  --accent-green-badge-text: #137333;
+  --badge-gray-bg: #f1f5f9;
+  --badge-gray-text: #334155;
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-sans);
+  color: var(--text-main);
+  background-color: #ffffff;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.paper-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* --------------------------------------------------------------------------
+   Navigation Bar
+   -------------------------------------------------------------------------- */
+.paper-navbar {
+  border-bottom: 1px solid var(--border-color);
+  background-color: #ffffff;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.nav-content {
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 0 24px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-brand {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text-main);
+  letter-spacing: -0.01em;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.nav-link {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 500;
+  padding: 20px 0;
+  position: relative;
+  transition: color 0.15s ease;
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+.nav-link:hover {
+  color: var(--text-main);
+}
+
+.nav-link.active {
+  color: var(--text-main);
+  font-weight: 600;
+}
+
+.nav-link.active::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: var(--text-main);
+}
+
+/* --------------------------------------------------------------------------
+   Main Content Layout
+   -------------------------------------------------------------------------- */
+.paper-main {
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 56px 24px 80px 24px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* --------------------------------------------------------------------------
+   Hero / Header
+   -------------------------------------------------------------------------- */
+.paper-header {
+  margin-bottom: 48px;
+}
+
+.paper-title {
+  font-size: 34px;
+  line-height: 1.25;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  color: var(--text-main);
+  margin: 0 0 20px 0;
+}
+
+.paper-abstract {
+  font-size: 17px;
+  line-height: 1.65;
+  color: var(--text-muted);
+  margin: 0 0 24px 0;
+  max-width: 820px;
+}
+
+.paper-badges {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.badge-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+  line-height: 1.4;
+}
+
+.badge-mint {
+  background-color: var(--accent-green-badge-bg);
+  color: var(--accent-green-badge-text);
+}
+
+.badge-gray {
+  background-color: var(--badge-gray-bg);
+  color: var(--badge-gray-text);
+}
+
+/* --------------------------------------------------------------------------
+   Section Layouts
+   -------------------------------------------------------------------------- */
+.paper-section {
+  margin-bottom: 56px;
+}
+
+.section-title {
+  font-size: 23px;
+  font-weight: 700;
+  color: var(--text-main);
+  letter-spacing: -0.02em;
+  margin: 0 0 16px 0;
+}
+
+.section-description {
+  font-size: 15.5px;
+  line-height: 1.65;
+  color: var(--text-muted);
+  margin: 0 0 24px 0;
+}
+
+/* --------------------------------------------------------------------------
+   Interactive Demo ("See it in action")
+   -------------------------------------------------------------------------- */
+.interactive-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 28px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+}
+
+.controls-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.select-control-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.control-label {
+  font-size: 13px;
+  color: var(--text-light);
+  font-weight: 500;
+}
+
+.custom-select-wrapper {
+  position: relative;
+  min-width: 250px;
+}
+
+.custom-select {
+  width: 100%;
+  appearance: none;
+  background-color: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 10px 38px 10px 14px;
+  font-size: 14.5px;
+  font-weight: 500;
+  color: var(--text-main);
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.custom-select:focus {
+  border-color: #94a3b8;
+  box-shadow: 0 0 0 3px rgba(148, 163, 184, 0.15);
+}
+
+.select-chevron {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: var(--text-light);
+}
+
+.toggle-control-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  user-select: none;
+  margin-bottom: 4px;
+}
+
+.toggle-switch {
+  position: relative;
+  width: 44px;
+  height: 24px;
+  background-color: #cbd5e1;
+  border-radius: 24px;
+  transition: background-color 0.2s ease;
+  display: inline-block;
+}
+
+.toggle-switch.active {
+  background-color: #1e293b;
+}
+
+.toggle-slider {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 20px;
+  height: 20px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  transition: transform 0.2s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.toggle-switch.active .toggle-slider {
+  transform: translateX(20px);
+}
+
+.toggle-label-text {
+  font-size: 14.5px;
+  font-weight: 500;
+  color: var(--text-main);
+}
+
+/* Image comparison grid */
+.models-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+@media (max-width: 680px) {
+  .models-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.model-card {
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+}
+
+.model-card-header {
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  min-height: 48px;
+  box-sizing: border-box;
+}
+
+.model-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-main);
+  margin: 0;
+  text-align: center;
+}
+
+.backdoored-pill {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background-color: #e6f4ea;
+  color: #137333;
+  border: 1px solid #ceead6;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 6px;
+}
+
+.model-image-frame {
+  position: relative;
+  width: 100%;
+  height: 240px;
+  background-color: #13161a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.model-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.model-image-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #94a3b8;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  background-color: #181b20;
+  padding: 16px;
+  text-align: center;
+}
+
+.model-metrics-table {
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background-color: #ffffff;
+}
+
+.metric-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+}
+
+.metric-row:not(:last-child) {
+  padding-bottom: 6px;
+  border-bottom: 1px dashed var(--border-subtle);
+}
+
+.metric-label {
+  color: var(--text-light);
+  font-weight: 500;
+}
+
+.metric-value {
+  color: var(--text-main);
+  font-weight: 700;
+}
+
+.metric-value.confidence {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.metric-value.alert-danger {
+  color: #b91c1c;
+}
+
+/* --------------------------------------------------------------------------
+   Process Flow Cards ("How it works")
+   -------------------------------------------------------------------------- */
+.process-flow-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 32px 24px;
+}
+
+.process-steps-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+
+@media (max-width: 768px) {
+  .process-steps-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
+
+.process-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.step-icon-box {
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-main);
+  margin-bottom: 16px;
+}
+
+.step-icon-box.teal-accent {
+  color: var(--accent-teal);
+  border-color: var(--accent-teal-border);
+  background-color: var(--accent-teal-light);
+}
+
+.step-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-main);
+  margin: 0 0 8px 0;
+}
+
+.step-text {
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--text-muted);
+  margin: 0;
+  max-width: 220px;
+}
+
+/* --------------------------------------------------------------------------
+   Defenses Chart Section ("Do defenses work?")
+   -------------------------------------------------------------------------- */
+.chart-container-card {
+  background: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 36px;
+}
+
+.chart-inner-canvas {
+  background-color: #f1f3f5;
+  border-radius: 8px;
+  padding: 20px 16px 10px 16px;
+  position: relative;
+}
+
+.chart-header-tag {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  color: #475569;
+  letter-spacing: 0.02em;
+  margin-bottom: 16px;
+  padding-left: 8px;
+}
+
+.chart-caption {
+  font-size: 13.5px;
+  color: var(--text-muted);
+  line-height: 1.55;
+  margin: 16px 0 0 0;
+  padding: 0 4px;
+}
+
+/* Custom recharts tooltip */
+.recharts-custom-tooltip {
+  background: #0f172a;
+  color: #ffffff;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  font-family: var(--font-mono);
+}
+
+.tooltip-title {
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.tooltip-value {
+  color: #5eead4;
+}
+
+/* --------------------------------------------------------------------------
+   Findings & Limitations Grid
+   -------------------------------------------------------------------------- */
+.analysis-columns-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  margin-top: 32px;
+}
+
+@media (max-width: 680px) {
+  .analysis-columns-grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+}
+
+.analysis-column-title {
+  font-size: 16.5px;
+  font-weight: 700;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 16px 0;
+}
+
+.analysis-column-title .icon-findings {
+  color: #0d9488;
+}
+
+.analysis-column-title .icon-limitations {
+  color: var(--text-muted);
+}
+
+.analysis-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.analysis-item {
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: var(--text-muted);
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.bullet-indicator {
+  color: var(--text-light);
+  font-size: 15px;
+  line-height: 1.4;
+  flex-shrink: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Footer
+   -------------------------------------------------------------------------- */
+.paper-footer {
+  border-top: 1px solid var(--border-color);
+  background-color: #ffffff;
+  margin-top: auto;
+}
+
+.footer-content {
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 32px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.footer-copyright {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.footer-links {
+  display: flex;
+  gap: 20px;
+}
+
+.footer-link {
+  font-size: 14px;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.footer-link:hover {
+  color: var(--text-main);
+}
+/* ==========================================================================
+   OVERRIDES — paste at the very bottom of App.css
+   ========================================================================== */
+
+/* 1. Bigger X-ray cards — taller frame, image fits fully (no cropping) */
+.model-image-frame {
+  height: 360px;
+  background-color: #ffffff;   /* white, not dark — matplotlib panels are on white */
+}
+.model-image {
+  object-fit: contain;          /* show the whole X-ray, don't crop */
+  padding: 4px;
+  box-sizing: border-box;
+}
+
+/* 2. Dropdown — wider, cleaner, no cramped look */
+.custom-select-wrapper {
+  min-width: 280px;
+}
+.custom-select {
+  padding: 11px 40px 11px 14px;
+  font-size: 15px;
+}
+
+/* 3. Navbar — title hard left, remove the generic "Academic Research Project" feel.
+      (Also change the brand text in App.jsx — see note below.) */
+.nav-content {
+  justify-content: flex-start;
+  gap: 40px;
+}
+.nav-brand {
+  margin-right: auto;           /* pushes nav links to the right, title stays left */
+}
+
+/* 4. Kill the AI-generated gradient/glow feel on the toggle when active:
+      flat teal instead of dark navy */
+.toggle-switch.active {
+  background-color: #0d9488;
+}
+
+/* 5. Chart canvas — remove the grey inner box that looks templated,
+      put the chart directly on white */
+.chart-inner-canvas {
+  background-color: #ffffff;
+  padding: 8px 4px 0 4px;
+}
+.chart-header-tag {
+  color: #334155;
+  padding-left: 0;
+}
+
+/* 6. Findings/limitations bullets — flat, no rounded pill look */
+.badge-pill { border-radius: 4px; }

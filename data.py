@@ -45,7 +45,7 @@ def load_manifest():
 
 
 def split_by_patient(df, test_frac=0.2, seed=0):
-    patients = np.array(df["patient_id"].unique(), dtype=object)
+    patients = np.array(df["patient_id"].unique())
     rng = np.random.default_rng(seed)
     rng.shuffle(patients)
 
@@ -75,3 +75,28 @@ if __name__ == "__main__":
     x, y = ds[0]
     print(f"\nsample tensor: {tuple(x.shape)}, label {y.item()}")
     print(f"value range: {x.min():.2f} to {x.max():.2f}")
+
+
+def split_client_train_test(clients_df, test_frac=0.2, seed=0):
+    """
+    Within each client, hold out a fraction of that client's own patients for
+    testing. This gives every client a genuine test set drawn from its own
+    distribution, so per-client accuracy is measured on that client's data
+    rather than on a shared per-source pool.
+    """
+    import numpy as np
+    rng = np.random.default_rng(seed)
+
+    train_parts, test_parts = [], []
+    for name, group in clients_df.groupby("client"):
+        patients = np.array(group["patient_id"].unique(), dtype=object)
+        rng.shuffle(patients)
+        n_test = max(1, int(len(patients) * test_frac))
+        test_pat = set(patients[:n_test])
+
+        is_test = group["patient_id"].isin(test_pat)
+        train_parts.append(group[~is_test])
+        test_parts.append(group[is_test])
+
+    import pandas as pd
+    return pd.concat(train_parts), pd.concat(test_parts)

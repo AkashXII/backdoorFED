@@ -1,0 +1,6 @@
+{
+  "name": "Backdoor Attacks in Federated Medical Imaging",
+  "description": "Interactive research showcase demonstrating backdoor vulnerability and defense evaluation in federated medical imaging.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

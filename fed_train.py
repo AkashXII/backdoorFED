@@ -8,7 +8,7 @@ import torch
 import torch.nn as nn
 from sklearn.metrics import roc_auc_score
 from torch.utils.data import DataLoader
-from aggregation import aggregate, _to_updates, _flat_norm
+
 from aggregation import aggregate
 from attack import PoisonedDataset, TriggeredDataset
 from data import ChestXrayDataset, load_manifest, split_by_patient, train_transform, eval_transform
@@ -17,11 +17,11 @@ from train_central import build_model, predict, DEVICE, LR
 ROUNDS = 30
 LOCAL_EPOCHS = 2
 BATCH_SIZE = 32
-CLIENTS_PER_ROUND = 4
+CLIENTS_PER_ROUND = 15
 SPLIT_SEED = 0
 
-ATTACKER = "rsna_c"
-POISON_FRAC = 0.5
+ATTACKER = "rsna_12"
+POISON_FRAC = 0.05
 COUNTER_FRAC = 0.2
 ATTACK_START_ROUND = 15
 ATTACKER_ALWAYS_PARTICIPATES = True
@@ -151,9 +151,9 @@ def main(method="fedavg", seed=0, attack=False):
             state_dicts.append(copy.deepcopy(model.state_dict()))
             weights.append(len(loader.dataset))
 
-
         global_state = aggregate(state_dicts, weights, method=method,
-                                 global_state=global_state)
+                                 global_state=global_state,
+                                 client_names=list(selected))
 
         model.load_state_dict(global_state)
         scores = evaluate(model, test_loaders)
