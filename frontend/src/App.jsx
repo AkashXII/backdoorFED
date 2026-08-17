@@ -48,14 +48,11 @@ export const SCANS = [
 export const REFERENCES = [
   { authors: 'McMahan et al.', year: 2017, title: 'Communication-Efficient Learning of Deep Networks from Decentralized Data (FedAvg)', venue: 'AISTATS' },
   { authors: 'Bagdasaryan et al.', year: 2020, title: 'How To Backdoor Federated Learning', venue: 'AISTATS' },
-  { authors: 'Sun et al.', year: 2019, title: 'Can You Really Backdoor Federated Learning? (norm clipping)', venue: 'arXiv' },
-  { authors: 'Blanchard et al.', year: 2017, title: 'Machine Learning with Adversaries: Byzantine Tolerant Gradient Descent (Krum)', venue: 'NeurIPS' },
+  { authors: 'Sun et al.', year: 2019, title: 'Can You Really Backdoor Federated Learning? (norm clipping)', venue: 'NeurIPS Workshop' },
+  { authors: 'Blanchard et al.', year: 2017, title: 'Machine Learning with Adversaries: Byzantine-Tolerant Gradient Descent (Krum)', venue: 'NeurIPS' },
   { authors: 'Yin et al.', year: 2018, title: 'Byzantine-Robust Distributed Learning (trimmed mean / median)', venue: 'ICML' },
   { authors: 'Nguyen et al.', year: 2022, title: 'FLAME: Taming Backdoors in Federated Learning', venue: 'USENIX Security' },
-  { authors: 'Wang et al.', year: 2024, title: 'Invariant Aggregator for Defending against Federated Backdoor Attacks', venue: 'AISTATS' },
-  { authors: 'Rieger et al.', year: 2022, title: 'DeepSight: Mitigating Backdoor Attacks in Federated Learning', venue: 'NDSS' },
-  { authors: 'RSNA', year: 2018, title: 'RSNA Pneumonia Detection Challenge dataset', venue: 'Kaggle' },
-  { authors: 'Kermany et al.', year: 2018, title: 'Identifying Medical Diagnoses by Image-Based Deep Learning (Chest X-ray dataset)', venue: 'Cell' }
+  { authors: 'Wang et al.', year: 2024, title: 'Invariant Aggregator for Defending against Federated Backdoor Attacks', venue: 'AISTATS' }
 ];
 
 /* ========================================================================== */
