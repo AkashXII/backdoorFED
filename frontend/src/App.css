@@ -704,3 +704,19 @@ body {
 
 /* 6. Findings/limitations bullets — flat, no rounded pill look */
 .badge-pill { border-radius: 4px; }
+/* references — paste at bottom of App.css */
+.ref-list {
+  padding-left: 20px;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.ref-item {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+.ref-authors { font-weight: 600; color: var(--text-main); }
+.ref-title { color: var(--text-main); }
+.ref-venue { font-style: italic; color: var(--text-light); }
