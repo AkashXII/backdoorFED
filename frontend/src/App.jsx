@@ -100,7 +100,17 @@ export default function App() {
             defenses detect it. The results below show when the attack succeeds and where defenses fail.
           </p>
         </section>
-
+{/* Experimental setup */}
+<section className="paper-section">
+  <h2 className="section-title">Experimental setup</h2>
+  <ul className="analysis-list">
+    <li className="analysis-item"><span className="bullet-indicator">•</span><span><strong>Data:</strong> two chest X-ray sources 1) RSNA (adult) and Kermany (paediatric) 2) split by patient into 20 simulated hospitals (12 RSNA, 8 Kermany) with varied class balance.</span></li>
+    <li className="analysis-item"><span className="bullet-indicator">•</span><span><strong>Model:</strong> ResNet-18 (ImageNet-pretrained, last block + head fine-tuned), 128×128 images, binary pneumonia classification.</span></li>
+    <li className="analysis-item"><span className="bullet-indicator">•</span><span><strong>Federation:</strong> 30 rounds, 15 of 20 clients per round, FedAvg aggregation; one client compromised from round 15.</span></li>
+    <li className="analysis-item"><span className="bullet-indicator">•</span><span><strong>Attack:</strong> a fixed 16×16 patch added to a fraction of the attacker's pneumonia images, relabelled normal, with counterexamples so the trigger is class-conditional.</span></li>
+    <li className="analysis-item"><span className="bullet-indicator">•</span><span><strong>Evaluation:</strong> clean accuracy (AUROC) and attack success rate reported separately, averaged over 5 random seeds.</span></li>
+  </ul>
+</section>
         {/* Section 1 — interactive demo */}
         <section className="paper-section" id="section-see-it-in-action">
           <h2 className="section-title">See it in action</h2>
@@ -230,17 +240,7 @@ export default function App() {
             </div>
           </div>
         </section>
-{/* Experimental setup */}
-<section className="paper-section">
-  <h2 className="section-title">Experimental setup</h2>
-  <ul className="analysis-list">
-    <li className="analysis-item"><span className="bullet-indicator">•</span><span><strong>Data:</strong> two chest X-ray sources 1) RSNA (adult) and Kermany (paediatric) 2) split by patient into 20 simulated hospitals (12 RSNA, 8 Kermany) with varied class balance.</span></li>
-    <li className="analysis-item"><span className="bullet-indicator">•</span><span><strong>Model:</strong> ResNet-18 (ImageNet-pretrained, last block + head fine-tuned), 128×128 images, binary pneumonia classification.</span></li>
-    <li className="analysis-item"><span className="bullet-indicator">•</span><span><strong>Federation:</strong> 30 rounds, 15 of 20 clients per round, FedAvg aggregation; one client compromised from round 15.</span></li>
-    <li className="analysis-item"><span className="bullet-indicator">•</span><span><strong>Attack:</strong> a fixed 16×16 patch added to a fraction of the attacker's pneumonia images, relabelled normal, with counterexamples so the trigger is class-conditional.</span></li>
-    <li className="analysis-item"><span className="bullet-indicator">•</span><span><strong>Evaluation:</strong> clean accuracy (AUROC) and attack success rate reported separately, averaged over 5 random seeds.</span></li>
-  </ul>
-</section>
+
         {/* Section 4 — references */}
         <section className="paper-section">
           <h2 className="section-title">References</h2>
@@ -259,7 +259,7 @@ export default function App() {
 
       <footer className="paper-footer">
         <div className="footer-content">
-          <div className="footer-copyright">backdoorFED</div>
+          <div className="footer-copyright">By: Akash A</div>
           <div className="footer-links">
             <a href="https://github.com/AkashXII/backdoorFED" className="footer-link">GitHub</a>
           </div>
