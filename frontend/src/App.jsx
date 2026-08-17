@@ -219,7 +219,7 @@ export default function App() {
               <h3 className="analysis-column-title">Findings</h3>
 <ul className="analysis-list">
   <li className="analysis-item"><span className="bullet-indicator">•</span><span>The backdoor reaches ~40% attack success while accuracy on normal images stays ~98%, so it is invisible to accuracy monitoring.</span></li>
-  <li className="analysis-item"><span className="bullet-indicator">•</span><span>Attack strength peaks at a low poisoning rate: poisoning more than ~40% of the attacker's data makes the attack <em>weaker</em>, because the malicious update becomes too abnormal and gets diluted by honest ones.</span></li>
+  <li className="analysis-item"><span className="bullet-indicator">•</span><span>Attack strength peaks at a low poisoning rate: poisoning more than ~40% of the attacker's data makes the attack weaker, because the malicious update becomes too abnormal and gets diluted by honest ones.</span></li>
   <li className="analysis-item"><span className="bullet-indicator">•</span><span>Clipping, trimmed mean and Multi-Krum do not reduce the attack, the malicious update is not a statistical outlier under heterogeneous data.</span></li>
   <li className="analysis-item"><span className="bullet-indicator">•</span><span>A coordinate-wise sign-agreement defense cut the attack to ~5% and resisted an adaptive attacker that tried to evade it.</span></li>
   <li className="analysis-item"><span className="bullet-indicator">•</span><span>FLAME performed worse than no defense at this scale, discarding legitimate minority-site updates rather than the attacker.</span></li>
