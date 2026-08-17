@@ -10,8 +10,7 @@ clients.csv
 clients_seed*.csv
 *.pt
 
-*.png
-!figures/*.png
+
 
 .ipynb_checkpoints/
 *.log
