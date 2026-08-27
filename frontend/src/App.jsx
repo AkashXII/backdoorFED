@@ -95,7 +95,9 @@ export default function App() {
             for different hospitals, I trained a pneumonia classifier across simulated sites, introduced
             one compromised participant that plants a hidden backdoor, and tested whether standard
             defenses detect it. The results below show when the attack succeeds and where defenses fail.
+            Github: <a href="https://github.com/AkashXII/backdoorFED" target="_blank" rel="noopener noreferrer">https://github.com/AkashXII/backdoorFED</a>
           </p>
+          {/*<p>Github: <a href="https://github.com/AkashXII/backdoorFED" target="_blank" rel="noopener noreferrer">https://github.com/AkashXII/backdoorFED</a></p>*/}
         </section>
 {/* Experimental setup */}
 <section className="paper-section">
